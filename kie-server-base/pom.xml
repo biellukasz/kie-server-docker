@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>com.github.sutaakar</groupId>
+  <artifactId>kie-server-base</artifactId>
+  <packaging>pom</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <name>Kie server base build</name>
+  <description>Experimental build of Kie server from master branch. Contains support for clustering.</description>
+
+  <properties>
+    <version.org.kie>7.0.0-SNAPSHOT</version.org.kie>
+    <version.postgresql>9.4.1209</version.postgresql>
+    <kie.server.war>${maven.dependency.org.kie.server.kie-server.ee7.war.path}</kie.server.war>
+    <postgresql.jar>${maven.dependency.org.postgresql.postgresql.jar.path}</postgresql.jar>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.kie.server</groupId>
+      <artifactId>kie-server</artifactId>
+      <version>${version.org.kie}</version>
+      <classifier>ee7</classifier>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${version.postgresql}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <id>process-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <directory>src/main/resources</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <id>prepare-kie-server</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <copy file="${kie.server.war}" tofile="${project.build.outputDirectory}/deployable/kie-server.war"/>
+                <copy file="${postgresql.jar}" tofile="${project.build.outputDirectory}/deployable/postgresql.jar"/>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.4.13</version>
+        <executions>
+          <execution>
+            <id>docker</id>
+            <phase>package</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+          <imageName>karelsuta/experimental</imageName>
+          <imageTags>
+            <imageTag>0.0.1</imageTag>
+          </imageTags>
+          <resources>
+            <resource>
+              <directory>${project.build.outputDirectory}</directory>
+            </resource>
+          </resources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>jboss-community-repository</id>
+      <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+    </repository>
+  </repositories>
+</project>

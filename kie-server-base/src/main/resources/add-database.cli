@@ -1,0 +1,12 @@
+embed-server --server-config=${env.SERVER_CONFIG}
+
+# Add driver module
+module add --name=org.postgresql.postgresql --resources=/tmp/postgresql-driver.jar --dependencies=javax.api,javax.transaction.api
+
+# Add driver
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=org.postgresql.Driver,driver-module-name=org.postgresql.postgresql,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+# Add datasource
+xa-data-source add --name=PostgreDS --jndi-name=${env.POSTGRESQL_JNDI} --driver-name=postgresql --user-name=${env.POSTGRESQL_USER} --password=${env.POSTGRESQL_PASSWORD} --xa-datasource-properties=ServerName=${env.POSTGRESQL_SERVICE_HOST},PortNumber=${env.POSTGRESQL_SERVICE_PORT},DatabaseName=${env.POSTGRESQL_DATABASE}
+
+stop-embedded-server
