@@ -16,6 +16,8 @@
     <version.postgresql>9.4.1209</version.postgresql>
     <kie.server.war>${maven.dependency.org.kie.server.kie-server.ee7.war.path}</kie.server.war>
     <postgresql.jar>${maven.dependency.org.postgresql.postgresql.jar.path}</postgresql.jar>
+    <docker.image.name>karelsuta/kie-server-postgresql</docker.image.name>
+    <docker.image.tag>0.0.1</docker.image.tag>
   </properties>
 
   <dependencies>
@@ -92,9 +94,9 @@
         </executions>
         <configuration>
           <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-          <imageName>karelsuta/experimental</imageName>
+          <imageName>${docker.image.name}</imageName>
           <imageTags>
-            <imageTag>0.0.1</imageTag>
+            <imageTag>${docker.image.tag}</imageTag>
           </imageTags>
           <resources>
             <resource>
