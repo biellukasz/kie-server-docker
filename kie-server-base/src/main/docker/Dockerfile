@@ -7,7 +7,7 @@ MAINTAINER "Karel Suta" "ksuta@redhat.com"
 
 
 ####### ENVIRONMENT ############
-ENV JAVA_OPTS -XX:MaxPermSize=256m -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
+ENV JAVA_OPTS -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
 ENV JBOSS_BIND_ADDRESS 0.0.0.0
 ENV SERVER_CONFIG standalone-full.xml
 # ENV DOCKER_IP retrieved from pod IP or hostname
