@@ -20,6 +20,7 @@
   <modules>
     <module>kie-server-base</module>
     <module>workbench</module>
+    <module>kie-server-router</module>
   </modules>
 
   <build>
