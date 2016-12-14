@@ -1,0 +1,6 @@
+embed-server --server-config=${env.SERVER_CONFIG}
+
+# Add login module
+/subsystem=security/security-domain=other/authentication=classic/login-module=org.kie.security.jaas.KieLoginModule:add(code=org.kie.security.jaas.KieLoginModule,flag=optional,module=deployment.jbpm-workbench.war)
+
+stop-embedded-server

@@ -19,6 +19,7 @@
 
   <modules>
     <module>kie-server-base</module>
+    <module>workbench</module>
   </modules>
 
   <build>
