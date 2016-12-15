@@ -13,3 +13,7 @@ Can be configured to use PostgreSQL from different source, in that case define a
 ####workbench folder:
 
 Contains Docker image of jBPM Workbench.
+
+####kie-server-router folder:
+
+Contains Docker image of Kie Server router.
