@@ -38,8 +38,6 @@ ENV POSTGRESQL_JNDI java:jboss/datasources/PostgreDS
 RUN mkdir -p $HOME/.m2
 ADD settings.xml $JBOSS_HOME/../.m2/settings.xml
 ADD start_kie-server.sh $JBOSS_HOME/bin/start_kie-server.sh
-ADD application-users.properties $JBOSS_HOME/standalone/configuration/application-users.properties
-ADD application-roles.properties $JBOSS_HOME/standalone/configuration/application-roles.properties
 ADD deployable/kie-server.war $JBOSS_HOME/standalone/deployments/kie-server.war
 RUN touch $JBOSS_HOME/standalone/deployments/kie-server.war.dodeploy
 
@@ -48,6 +46,12 @@ RUN touch $JBOSS_HOME/standalone/deployments/kie-server.war.dodeploy
 ADD deployable/postgresql.jar /tmp/postgresql-driver.jar
 ADD add-database.cli /tmp/add-database.cli
 RUN $JBOSS_HOME/bin/jboss-cli.sh --file=/tmp/add-database.cli
+
+
+####### ADD USERS TO WILDFLY ############
+RUN $JBOSS_HOME/bin/add-user.sh -u john -p john -g admin,kie-server,engineering -a -s
+RUN $JBOSS_HOME/bin/add-user.sh -u mary -p mary -g admin,kie-server,HR -a -s
+RUN $JBOSS_HOME/bin/add-user.sh -u kieserver -p kieserver1! -g kie-server -a -s
 
 
 ###### SWITCH USER root ######

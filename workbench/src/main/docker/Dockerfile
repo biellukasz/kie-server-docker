@@ -14,8 +14,6 @@ ENV SERVER_CONFIG standalone.xml
 
 ####### Drools KIE Workbench CUSTOM CONFIGURATION ############
 ADD start_workbench.sh $JBOSS_HOME/bin/start_workbench.sh
-ADD application-users.properties $JBOSS_HOME/standalone/configuration/application-users.properties
-ADD application-roles.properties $JBOSS_HOME/standalone/configuration/application-roles.properties
 ADD deployable/jbpm-workbench.war $JBOSS_HOME/standalone/deployments/jbpm-workbench.war
 RUN touch $JBOSS_HOME/standalone/deployments/jbpm-workbench.war.dodeploy
 
@@ -23,6 +21,11 @@ RUN touch $JBOSS_HOME/standalone/deployments/jbpm-workbench.war.dodeploy
 ####### ADD LOGIN MODULE ############
 ADD add-login-module.cli /tmp/add-login-module.cli
 RUN $JBOSS_HOME/bin/jboss-cli.sh --file=/tmp/add-login-module.cli
+
+
+####### ADD USERS TO WILDFLY ############
+RUN $JBOSS_HOME/bin/add-user.sh -u john -p john -g admin,kie-server,engineering -a -s
+RUN $JBOSS_HOME/bin/add-user.sh -u mary -p mary -g admin,kie-server,HR -a -s
 
 
 ###### SWITCH USER root ######
