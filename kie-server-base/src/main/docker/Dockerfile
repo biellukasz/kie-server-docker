@@ -7,7 +7,7 @@ MAINTAINER "Karel Suta" "ksuta@redhat.com"
 
 
 ####### ENVIRONMENT ############
-ENV JAVA_OPTS -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
+ENV JAVA_OPTS -Xms256m -Xmx768m -Djava.net.preferIPv4Stack=true
 ENV SERVER_CONFIG standalone-full.xml
 # ENV DOCKER_IP retrieved from pod IP or hostname
 ENV DOCKER_PORT 8080
