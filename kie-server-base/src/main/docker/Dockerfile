@@ -8,7 +8,6 @@ MAINTAINER "Karel Suta" "ksuta@redhat.com"
 
 ####### ENVIRONMENT ############
 ENV JAVA_OPTS -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
-ENV JBOSS_BIND_ADDRESS 0.0.0.0
 ENV SERVER_CONFIG standalone-full.xml
 # ENV DOCKER_IP retrieved from pod IP or hostname
 ENV DOCKER_PORT 8080
@@ -26,12 +25,12 @@ ENV KIE_MAVEN_REPO_PASSWORD john
 ENV KIE_SERVER_CONTROLLER_USER john
 ENV KIE_SERVER_CONTROLLER_PWD john
 
-ENV POSTGRESQL_USER userPostgre
-ENV POSTGRESQL_PASSWORD kvqkMKFxeTgiEqvC
-ENV POSTGRESQL_DATABASE sampledb
-ENV POSTGRESQL_JNDI java:jboss/datasources/PostgreDS
-# ENV POSTGRESQL_SERVICE_HOST taken from postgre DB pod
-# ENV POSTGRESQL_SERVICE_PORT taken from postgre DB pod
+# ENV KIE_SERVER_DB_USER PostgreSQL database user name
+# ENV KIE_SERVER_DB_PASSWORD PostgreSQL database user password
+ENV KIE_SERVER_DB_NAME sampledb
+ENV KIE_SERVER_DB_JNDI java:jboss/datasources/PostgreDS
+# ENV KIE_SERVER_DB_HOST host IP for PostgreSQL DB
+ENV KIE_SERVER_DB_PORT 5432
 
 
 ####### Drools KIE Server CUSTOM CONFIGURATION ############

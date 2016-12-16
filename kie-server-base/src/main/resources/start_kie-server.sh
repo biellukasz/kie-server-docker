@@ -26,7 +26,7 @@ echo "Using '$KIE_SERVER_LOCATION' as KIE server location"
 
 
 # Default arguments for running the KIE Execution server.
-JBOSS_ARGUMENTS=" -b $JBOSS_BIND_ADDRESS -Dorg.kie.server.id=$KIE_SERVER_ID -Dorg.kie.server.user=$KIE_SERVER_USER -Dorg.kie.server.pwd=$KIE_SERVER_PWD -Dorg.kie.server.location=$KIE_SERVER_LOCATION"
+JBOSS_ARGUMENTS=" -b 0.0.0.0 -Dorg.kie.server.id=$KIE_SERVER_ID -Dorg.kie.server.user=$KIE_SERVER_USER -Dorg.kie.server.pwd=$KIE_SERVER_PWD -Dorg.kie.server.location=$KIE_SERVER_LOCATION"
 
 
 # Controller argument for the KIE Execution server. Only enabled if set the environment variable/s or detected container linking.
@@ -35,12 +35,26 @@ if [ -n "$KIE_SERVER_CONTROLLER" ]; then
     echo "Using '$KIE_MAVEN_REPO' for the kie-workbench Maven repository URL"
     JBOSS_ARGUMENTS="$JBOSS_ARGUMENTS -Dorg.kie.server.controller=$KIE_SERVER_CONTROLLER -Dorg.kie.server.controller.user=$KIE_SERVER_CONTROLLER_USER -Dorg.kie.server.controller.pwd=$KIE_SERVER_CONTROLLER_PWD"
 fi
-echo "JBoss arguments '$JBOSS_ARGUMENTS' "
+
+
+# If database host isn't defined try to load one from environment property.
+if [ ! -n "$KIE_SERVER_DB_HOST" ]; then
+    # Obtain hostname from default PostgreSQL environment variable
+    KIE_SERVER_DB_HOST=$POSTGRESQL_SERVICE_HOST
+
+    if [ ! -n "$KIE_SERVER_DB_HOST" ]; then
+        echo "Database hostname isn't defined, persistence will not work."
+    fi
+fi
+export KIE_SERVER_DB_HOST
+echo "Using '$KIE_SERVER_DB_HOST' as database hostname."
 
 
 # Database arguments for the KIE Execution server.
-JBOSS_ARGUMENTS="$JBOSS_ARGUMENTS -Dorg.kie.server.persistence.dialect=org.hibernate.dialect.PostgreSQLDialect -Dorg.kie.server.persistence.ds=$POSTGRESQL_JNDI"
+JBOSS_ARGUMENTS="$JBOSS_ARGUMENTS -Dorg.kie.server.persistence.dialect=org.hibernate.dialect.PostgreSQLDialect -Dorg.kie.server.persistence.ds=$KIE_SERVER_DB_JNDI"
 
+
+echo "JBoss arguments '$JBOSS_ARGUMENTS' "
 
 # Start Wildfly with the given arguments.
 echo "Running KIE Execution Server on JBoss Wildfly..."
