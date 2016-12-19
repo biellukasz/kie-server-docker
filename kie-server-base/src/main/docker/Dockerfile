@@ -32,6 +32,8 @@ ENV KIE_SERVER_DB_JNDI java:jboss/datasources/PostgreDS
 # ENV KIE_SERVER_DB_HOST host IP for PostgreSQL DB
 ENV KIE_SERVER_DB_PORT 5432
 
+# ENV KIE_SERVER_ROUTER
+
 
 ####### Drools KIE Server CUSTOM CONFIGURATION ############
 RUN mkdir -p $HOME/.m2

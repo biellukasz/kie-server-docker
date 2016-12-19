@@ -54,6 +54,13 @@ echo "Using '$KIE_SERVER_DB_HOST' as database hostname."
 JBOSS_ARGUMENTS="$JBOSS_ARGUMENTS -Dorg.kie.server.persistence.dialect=org.hibernate.dialect.PostgreSQLDialect -Dorg.kie.server.persistence.ds=$KIE_SERVER_DB_JNDI"
 
 
+# If Kie server router is configured then use it
+if [ -n "$KIE_SERVER_ROUTER" ]; then
+    echo "Using '$KIE_SERVER_ROUTER' as KIE server router"
+    JBOSS_ARGUMENTS="$JBOSS_ARGUMENTS -Dorg.kie.server.router=$KIE_SERVER_ROUTER"
+fi
+
+
 echo "JBoss arguments '$JBOSS_ARGUMENTS' "
 
 # Start Wildfly with the given arguments.
