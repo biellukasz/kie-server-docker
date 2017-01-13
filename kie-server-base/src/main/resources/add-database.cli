@@ -9,4 +9,7 @@ module add --name=org.postgresql.postgresql --resources=/tmp/postgresql-driver.j
 # Add datasource
 xa-data-source add --name=PostgreDS --jndi-name=${env.KIE_SERVER_DB_JNDI} --driver-name=postgresql --user-name=${env.KIE_SERVER_DB_USER} --password=${env.KIE_SERVER_DB_PASSWORD} --xa-datasource-properties=ServerName=${env.KIE_SERVER_DB_HOST},PortNumber=${env.KIE_SERVER_DB_PORT},DatabaseName=${env.KIE_SERVER_DB_NAME}
 
+# Add Quartz datasource
+data-source add --name=quartzNotManagedDS --jndi-name=java:jboss/datasources/quartzNotManagedDS --driver-name=postgresql --user-name=${env.KIE_SERVER_DB_USER} --password=${env.KIE_SERVER_DB_PASSWORD} --connection-url=jdbc:postgresql://${env.KIE_SERVER_DB_HOST}:${env.KIE_SERVER_DB_PORT}/${env.KIE_SERVER_DB_NAME} --jta=false
+
 stop-embedded-server

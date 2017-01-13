@@ -51,7 +51,7 @@ echo "Using '$KIE_SERVER_DB_HOST' as database hostname."
 
 
 # Database arguments for the KIE Execution server.
-JBOSS_ARGUMENTS="$JBOSS_ARGUMENTS -Dorg.kie.server.persistence.dialect=org.hibernate.dialect.PostgreSQLDialect -Dorg.kie.server.persistence.ds=$KIE_SERVER_DB_JNDI"
+JBOSS_ARGUMENTS="$JBOSS_ARGUMENTS -Dorg.kie.server.persistence.dialect=org.hibernate.dialect.PostgreSQLDialect -Dorg.kie.server.persistence.ds=$KIE_SERVER_DB_JNDI -Dorg.quartz.properties=$JBOSS_HOME/quartz/quartz-definition.properties"
 
 
 # If Kie server router is configured then use it

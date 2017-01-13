@@ -48,6 +48,8 @@ ADD deployable/postgresql.jar /tmp/postgresql-driver.jar
 ADD add-database.cli /tmp/add-database.cli
 RUN $JBOSS_HOME/bin/jboss-cli.sh --file=/tmp/add-database.cli
 
+ADD quartz-definition.properties $JBOSS_HOME/quartz/quartz-definition.properties
+
 
 ####### ADD USERS TO WILDFLY ############
 RUN $JBOSS_HOME/bin/add-user.sh -u john -p john -g admin,kie-server,engineering -a -s
