@@ -34,6 +34,8 @@ ENV KIE_SERVER_DB_PORT 5432
 
 # ENV KIE_SERVER_ROUTER
 
+ENV USE_QUARTZ false
+
 
 ####### Drools KIE Server CUSTOM CONFIGURATION ############
 RUN mkdir -p $HOME/.m2
