@@ -11,15 +11,33 @@ ENV ROUTER_HOME=/opt/jboss \
     KIE_SERVER_ROUTER_REPO_DIR=/opt/jboss \
     ROUTER_HOSTNAME_EXTERNAL=http://localhost:9000/
 
+# ENV KIE_SERVER_CONTROLLER
+ENV KIE_SERVER_CONTROLLER_USER john
+ENV KIE_SERVER_CONTROLLER_PWD john
+
 
 ####### EXPOSE ROUTER PORT ############
 EXPOSE 9000
 
 
-####### Drools KIE Workbench CUSTOM CONFIGURATION ############
+####### Kie server router CUSTOM CONFIGURATION ############
 ADD deployable/kie-server-router.jar $ROUTER_HOME/kie-server-router.jar
+ADD start_kie-server-router.sh $ROUTER_HOME/start_kie-server-router.sh
 
 
-####### RUNNING KIE WORKBENCH ############
+###### SWITCH USER root ######
+USER root
+
+
+###### CHANGE FILE PROPERTIES ######
+RUN chmod +x $ROUTER_HOME/start_kie-server-router.sh
+
+
+####### CUSTOM JBOSS USER ############
+# Switchback to jboss user
+USER jboss
+
+
+####### RUNNING Kie server router ############
 WORKDIR $ROUTER_HOME
-CMD [ "sh", "-c", "java -jar -Dorg.kie.server.router.host=$HOSTNAME -Dorg.kie.server.router.port=9000 -Dorg.kie.server.router.repo=$KIE_SERVER_ROUTER_REPO_DIR -Dorg.kie.server.router.url.external=$ROUTER_HOSTNAME_EXTERNAL $ROUTER_HOME/kie-server-router.jar" ]
+CMD ["./start_kie-server-router.sh"]
