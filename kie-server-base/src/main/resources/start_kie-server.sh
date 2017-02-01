@@ -68,6 +68,10 @@ if [ -n "$KIE_SERVER_ROUTER" ]; then
 fi
 
 
+# Custom settings.xml.
+JBOSS_ARGUMENTS="$JBOSS_ARGUMENTS -Dkie.maven.settings.custom=/opt/jboss/.m2/settings.xml"
+
+
 echo "JBoss arguments '$JBOSS_ARGUMENTS' "
 
 # Start Wildfly with the given arguments.

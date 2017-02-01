@@ -38,8 +38,8 @@ ENV USE_QUARTZ false
 
 
 ####### Drools KIE Server CUSTOM CONFIGURATION ############
-RUN mkdir -p $HOME/.m2
-ADD settings.xml $JBOSS_HOME/../.m2/settings.xml
+RUN mkdir -p /opt/jboss/.m2
+ADD settings.xml /opt/jboss/.m2/settings.xml
 ADD start_kie-server.sh $JBOSS_HOME/bin/start_kie-server.sh
 ADD deployable/kie-server.war $JBOSS_HOME/standalone/deployments/kie-server.war
 RUN touch $JBOSS_HOME/standalone/deployments/kie-server.war.dodeploy

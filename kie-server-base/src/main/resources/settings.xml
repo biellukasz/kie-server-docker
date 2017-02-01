@@ -15,7 +15,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 <settings>
-  <localRepository>${env.HOME}/.m2/repository</localRepository>
+  <localRepository>/opt/jboss/.m2/repository</localRepository>
 
   <servers>
     <server>
