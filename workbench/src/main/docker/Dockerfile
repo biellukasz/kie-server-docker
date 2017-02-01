@@ -34,6 +34,9 @@ USER root
 
 ###### CHANGE FILE PROPERTIES ######
 RUN chmod +x $JBOSS_HOME/bin/start_workbench.sh
+RUN chgrp -R 0 /opt/jboss
+RUN chmod -R g+rw /opt/jboss
+RUN find /opt/jboss -type d -exec chmod g+x {} +
 
 
 ####### CUSTOM JBOSS USER ############
